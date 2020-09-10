@@ -1,7 +1,27 @@
 import React, { useState } from 'react';
+import * as yup from "yup";
+import axios from "axios";
+
+
 
 function Form() {
-    const [info, setInfo] = useState('');
+
+    const [formInfo, setFormInfo] = useState({
+        name: '',
+        email: '',
+        password: '',
+        checkbox: false
+    });
+
+    const changeHandler = (e) => {
+        e.persist()
+        validateForm(e);
+
+        let value = 
+            e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        setFormInfo({...formInfo, [e.target.name]: value})
+    }
+
     return (
         <form>
             <label htmlFor="name"></label>
