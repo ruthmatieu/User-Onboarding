@@ -10,7 +10,7 @@ const formSchema = yup.object().shape({
     
 })
 
-function Form() {
+function Form(props) {
     
     const [users, setUsers] = useState([]);
 
@@ -28,6 +28,9 @@ function Form() {
         let value = 
             e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setFormInfo({...formInfo, [e.target.name]: value})
+        setUsers({
+            ...users, [e.target.name]: e.target.value
+        });
     }
     const onFormSubmit = (e) => {
         e.preventDefault();
@@ -36,6 +39,13 @@ function Form() {
             .post('https://reqres.in/api/users', formInfo)
             .then(res => setUsers(res))
             .catch(err => console.log(err))
+        props.addNewData(users);
+        setFormInfo({
+            name: '',
+            email: '',
+            password: '',
+            checkbox: false
+        })
     }
 
     const [errorState, setErrorState] = useState({
@@ -64,47 +74,57 @@ function Form() {
     }
     return (
         <form onSubmit={onFormSubmit}>
-            <label htmlFor="name">Name</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value={formInfo.name}
-                onChange={changeHandler}
-            />
-            {errorState.name.length > 0 ? (<p className="error">{errorState.name}</p>) : null}
-            <label htmlFor="email">Email
+            <div className="form-info">
+                <label htmlFor="name">Name</label>
                 <input
                     type="text"
-                    id="email"
-                    name="email"
-                    value={formInfo.email}
+                    id="name"
+                    name="name"
+                    value={formInfo.name}
                     onChange={changeHandler}
                 />
-                {errorState.email.length > 0 ? (<p className="error">{errorState.email}</p>) : null}
-            </label>
+                {errorState.name.length > 0 ? (<p className="error">{errorState.name}</p>) : null}
+            </div>
 
-            <label htmlFor="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                value={formInfo.password}
-                onChange={changeHandler}
-            />
+            <div className="form-info">
+                <label htmlFor="email">Email
+                    <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        value={formInfo.email}
+                        onChange={changeHandler}
+                    />
+                    {errorState.email.length > 0 ? (<p className="error">{errorState.email}</p>) : null}
+                </label>
+            </div>
 
-            <input
-                type="checkbox"
-                id="checkbox"
-                name="checkbox"
-                checked={formInfo.checkbox}
-                onChange={changeHandler}
-            />
-            <label htmlFor="checkbox">I agree to the Terms and Conditions</label>
+            <div className="form-info">
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formInfo.password}
+                    onChange={changeHandler}
+                />
+            </div>
+
+            <div className="form-info">
+                <label htmlFor="checkbox">
+                    <input
+                        type="checkbox"
+                        id="checkbox"
+                        name="checkbox"
+                        checked={formInfo.checkbox}
+                        onChange={changeHandler}
+                    />
+                    I agree to the Terms and Conditions
+                </label>
+            </div>
         
             <button>Submit</button>
 
-            <p>{users}</p>
         </form>
     )
 }
