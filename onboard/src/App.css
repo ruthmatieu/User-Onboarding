@@ -1,8 +1,66 @@
 .App {
   text-align: center;
+  width: 700px;
+  background: linear-gradient(145deg, rgba(255,156,138,1) 30%, rgba(253,90,155,1) 100%);
+  margin: auto;
+  padding: 50px 0;
+  margin-top: 20px;
+  border-radius: 25px;
+}
+
+.display-results {
+  color: #3E5480;
+  background: white;
+  width: 300px;
+  margin: auto;
+  
+  padding: 5px 0;
+  margin-top: 20px;
 }
 
 form .form-info{
   display: block;
   margin: 25px 0;
+}
+
+label {
+  padding-right: 10px;
+}
+
+button {
+	box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	background:linear-gradient(to bottom, #80b5ea 5%, #3E5480 100%);
+	background-color:#bddbfa;
+	border-radius:6px;
+	border:1px solid #3E5480;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+  text-shadow:0px 1px 0px #3E5480;
+  margin-top: 20px;
+}
+button:hover {
+	background:linear-gradient(to bottom, #3E5480 5%, #80b5ea 100%);
+	background-color:#80b5ea;
+}
+button:active {
+	position:relative;
+	top:1px;
+}
+
+h1 {
+  color: white;;
+  font-size: 3rem;
+  padding-bottom: 30px;
+}
+
+.error {
+  color: white;
+  margin: 0;
+  font-size: 1rem;
 }

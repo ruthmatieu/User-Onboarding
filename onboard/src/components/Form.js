@@ -4,7 +4,8 @@ import axios from "axios";
 
 const formSchema = yup.object().shape({
     name: yup.string().required("Name is a required field."),
-    email: yup.string().email().required("Must include a valid email."),
+    email: yup.string().email().required("Must enter a valid email."),
+    role: yup.string(),
     password: yup.string().required(),
     checkbox: yup.boolean().oneOf([true], "Must agree to Terms and Conditions")
     
@@ -17,6 +18,7 @@ function Form(props) {
     const [formInfo, setFormInfo] = useState({
         name: '',
         email: '',
+        role: '',
         password: '',
         checkbox: false
     });
@@ -43,6 +45,7 @@ function Form(props) {
         setFormInfo({
             name: '',
             email: '',
+            role: '',
             password: '',
             checkbox: false
         })
@@ -51,6 +54,7 @@ function Form(props) {
     const [errorState, setErrorState] = useState({
         name: '',
         email: '',
+        role: '',
         password: '',
         checkbox: ''
     });
@@ -96,6 +100,25 @@ function Form(props) {
                         onChange={changeHandler}
                     />
                     {errorState.email.length > 0 ? (<p className="error">{errorState.email}</p>) : null}
+            
+                    {errorState.email.includes('waffle@syrup.com' ) ? (<p className="error">This email already exists</p>) : null}
+                </label>
+            </div>
+
+            <div className="form-info">
+                <label htmlFor="role">Department
+                    <select
+                        id="role"
+                        name="role"
+                        value={formInfo.role}
+                        onChange={changeHandler}>
+
+                        <option value={null}></option>    
+                        <option value="Sales">Sales</option>
+                        <option value="Customer Service">Customer Service</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Finance">Finance</option>
+                    </select>
                 </label>
             </div>
 

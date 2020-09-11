@@ -15,6 +15,7 @@ function App() {
       id: Date.now(),
       name: item.name,
       email: item.email,
+      role: item.role,
       password: item.password
     };
     setData([...data, newData])
