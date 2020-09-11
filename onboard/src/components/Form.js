@@ -11,6 +11,8 @@ const formSchema = yup.object().shape({
 })
 
 function Form() {
+    
+    const [users, setUsers] = useState([]);
 
     const [formInfo, setFormInfo] = useState({
         name: '',
@@ -21,15 +23,19 @@ function Form() {
 
     const changeHandler = (e) => {
         e.persist()
-        validateForm(e);
+        validate(e);
 
         let value = 
             e.target.type === 'checkbox' ? e.target.checked : e.target.value;
         setFormInfo({...formInfo, [e.target.name]: value})
     }
-    const onSubmit = (e) => {
+    const onFormSubmit = (e) => {
         e.preventDefault();
-            
+        console.log('We have received your application.');
+        axios
+            .post('https://reqres.in/api/users', formInfo)
+            .then(res => setUsers(res))
+            .catch(err => console.log(err))
     }
 
     const [errorState, setErrorState] = useState({
@@ -57,8 +63,8 @@ function Form() {
             });
     }
     return (
-        <form>
-            <label htmlFor="name"></label>
+        <form onSubmit={onFormSubmit}>
+            <label htmlFor="name">Name</label>
             <input
                 type="text"
                 id="name"
@@ -66,17 +72,19 @@ function Form() {
                 value={formInfo.name}
                 onChange={changeHandler}
             />
+            {errorState.name.length > 0 ? (<p className="error">{errorState.name}</p>) : null}
+            <label htmlFor="email">Email
+                <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    value={formInfo.email}
+                    onChange={changeHandler}
+                />
+                {errorState.email.length > 0 ? (<p className="error">{errorState.email}</p>) : null}
+            </label>
 
-            <label htmlFor="email"></label>
-            <input
-                type="text"
-                id="email"
-                name="email"
-                value={formInfo.email}
-                onChange={changeHandler}
-            />
-
-            <label htmlFor="password"></label>
+            <label htmlFor="password">Password</label>
             <input
                 type="password"
                 id="password"
@@ -95,6 +103,8 @@ function Form() {
             <label htmlFor="checkbox">I agree to the Terms and Conditions</label>
         
             <button>Submit</button>
+
+            <p>{users}</p>
         </form>
     )
 }
